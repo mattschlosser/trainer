@@ -39,7 +39,8 @@ class Controller {
             include '../views/AllModules.php';
         } else {
             // a user wants a specific module
-            $module = $this->model->getModule($_GET['module']);
+            $moduleID = htmlspecialchars($_GET['module']);
+            $module = $this->model->getModule($moduleID);
             
 //            if a user doesn't have a score yet, make one
             if ($user->hasScore($module->getID()) == false) {
@@ -77,13 +78,10 @@ class Controller {
                         if (isset($_POST['name']) && isset($_POST['email'])) {
                             $allFeedback;
                             if (!($user->hasSubmitted($module->getID()))) {
-                                $user->setName(($_POST['name']));
-                                $user->setEmail(($_POST['email']));
-                                echo $user->getEmail();
-                                echo $_POST['email'];
-                                // TODO add code to email camp office here. 
-                                // echo $user->getName() . ' (' . $user->getEmail() . ') has completed the ' .
-                                // $module->getTitle() . ' Training Module with a score of ' . array_sum($userScores);
+                                $name = htmlspecialchars($_POST['name']);
+                                $email = htmlspecialchars($_POST['email']);
+                                $user->setName($name);
+                                $user->setEmail($email);
                                 $user->submitted($module->getID());
                                 $allFeedback = $scoreCard->getAllFeedback();
                             }
@@ -93,12 +91,14 @@ class Controller {
                         }
                     }
                 } elseif (isset($_GET['intro'])) {
+                    $introID = (is_numeric($_GET['intro'])) ? $_GET['intro'] : 0;
                     include '../views/Intro.php';
                 } else {
                     include '../views/ModuleTitle.php';
                 }
             } else {
-                $section = $module->getSection($_GET['section']);
+                $sectionID = htmlspecialchars($_GET['section']);
+                $section = $module->getSection($sectionID);
                 // do section again?
                 if (isset($_POST['retry'])) {
                     $user->getScore($module->getID())->reset($section->getID());
@@ -109,55 +109,53 @@ class Controller {
                 elseif (!isset($_GET['page']) && !isset($_GET['quiz'])) {
                     include '../views/Section.php';
                 } elseif (!isset($_GET['quiz'])) {
-                    // $page = $section->getPage($_GET['page']);
+                    $page = (is_numeric($_GET['page'])) ? $_GET['page'] : 0;
                     include '../views/Page.php';
-                   // include '../views/modules/' . $module->getID() . '/' . $section->getID() . '/0.html';
                 } else {
                     $quiz = $section->getQuiz();
-                    $question = $quiz->getQuestion($_GET['quiz']);
+                    $questionID = (is_numeric($_GET['quiz'])) ? $_GET['quiz'] : 0;
+                    $question = $quiz->getQuestion($questionID);
                     $score = $user->getScore($module->getID());
                     if (isset($_POST['answer'])) {
-
                         $score->recordAnswer(
                             $section->getID(),
-                            $_GET['quiz'],
-                            $_POST['answer']
+                            $questionID,
+                            htmlspecialchars($_POST['answer'])
                         );
                     }
                     if (isset($_POST['feedback'])) {
                         $score->recordFeedback(
                             $section->getID(),
-                            $_GET['quiz'],
-                            $_POST['feedback']
+                            $questionID,
+                            htmlspecialchars($_POST['feedback'])
                         );
                     }
                     $answered = $score->isAnswered(
                         $section->getID(),
-                        $_GET['quiz']
+                        $questionID
                     );
                     $feedbacked = $score->hasFeedback(
                         $section->getID(),
-                        $_GET['quiz']
+                        $questionID
                     );
                     $solution = (int) $question->getSolution();
                     $userAnswer;
                     if ($answered) {
                         $userAnswer = (int) $score->getAnswer(
                             $section->getID(),
-                            $_GET['quiz']
+                            $questionID
                         );
                     }
                     $feedback;
                     if ($feedbacked) {
                         $feedback = $score->getFeedback(
                             $section->getID(),
-                            $_GET['quiz']
+                            $questionID
                         );
                     }
                     include '../views/Quiz.php';
                 }
             }
-
         }
         if (isset($_SESSION['user'])) {
             $_SESSION['user'] = serialize($user);

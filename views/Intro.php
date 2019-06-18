@@ -12,7 +12,7 @@
             </div>
         </nav>
         <div class="content">
-        <? include 'modules/' . $module->getID() . "/" . "intro" . "/" . $_GET['intro'] . '.html'; ?>
+        <? include 'modules/' . $module->getID() . "/" . "intro" . "/" . $introID . '.html'; ?>
         </div>
         <nav class='bottom'>
             <div class='wide'>

@@ -82,7 +82,7 @@ class Score {
         if (!key_exists($sectionID, $this->sectionFeedback)) {
             $this->sectionFeedback[$sectionID] = array();
         }
-        $this->sectionFeedback[$sectionID][$questionID] = htmlentities($feedback);
+        $this->sectionFeedback[$sectionID][$questionID] = $feedback;
     }
 
     /**

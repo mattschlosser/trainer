@@ -68,18 +68,18 @@
         <nav class="bottom">
             <div class="wide nav-grid">
             
-            <? if ($_GET['quiz'] > 0) { ?>
-                <a class='back' href="?module=<?= $module->getID() ?>&section=<?= $_GET['section'] ?>&quiz=<?= $_GET['quiz']-1?>">Back</a>
+            <? if ($questionID > 0) { ?>
+                <a class='back' href="?module=<?= $module->getID() ?>&section=<?= $section->getID() ?>&quiz=<?= $questionID-1?>">Back</a>
             <? } else { ?>
-                <a class='back' href="?module=<?= $module->getID() ?>&section=<?= $_GET['section'] ?>&page=<?= $section->getNumPages()-1?>">Back</a>
+                <a class='back' href="?module=<?= $module->getID() ?>&section=<?= $section->getID() ?>&page=<?= $section->getNumPages()-1?>">Back</a>
             <? } ?>
             <? if (!$answered) { ?>
             <button type="submit">Check Answer</button>
 
             </form>
             <? } else { ?>
-                <? if ($_GET['quiz'] < $quiz->getQuestionCount()-1) { ?>
-                    <a href="?module=<?= $module->getID() ?>&section=<?= $_GET['section'] ?>&quiz=<?= $_GET['quiz']+1?>">Next Question</a>
+                <? if ($questionID < $quiz->getQuestionCount()-1) { ?>
+                    <a href="?module=<?= $module->getID() ?>&section=<?= $section->getID() ?>&quiz=<?= $questionID+1?>">Next Question</a>
                 <? } else { ?>
                     <a href="?module=<?= $module->getID() ?>&showSections=true">Return to Sections</a>
                 <? } ?>

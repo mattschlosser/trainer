@@ -121,7 +121,7 @@ class User {
      * 
      * @param string $moduleID The id of the module you want the score for. 
      * 
-     * @return Score The score of the module, if any. Null otherwise. 
+     * @return Score The score of the module, if any; null otherwise. 
      */
     public function getScore($moduleID) {
         // gets the score record for a module for the current user. 

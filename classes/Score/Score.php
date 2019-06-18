@@ -55,7 +55,7 @@ class Score {
     /**
      * Records the current user's answer.
      * 
-     * @param string $sectionID The ID of the seection. 
+     * @param string $sectionID The ID of the section. 
      * 
      * @param int $questionID The question number. 
      * 
@@ -76,7 +76,7 @@ class Score {
      * 
      * @param int $questionID The question number. 
      * 
-     * @param int $ans The feednack the user sent. 
+     * @param int $feedback The feedback the user sent. 
      */
     public function recordFeedback($sectionID, $questionID, $feedback) {
         if (!key_exists($sectionID, $this->sectionFeedback)) {
@@ -169,7 +169,7 @@ class Score {
      * 
      * @param string $sectionID The id of the section. 
      * 
-     * @return int[] A dictonary of the answers, if any; 
+     * @return int[] A dictionary of the answers, if any; 
      */
     public function getSectionAnswers($sectionID) {
         if (key_exists($sectionID, $this->sectionAnswers)) {
@@ -183,7 +183,7 @@ class Score {
      * 
      * @param string $sectionID The id of the section. 
      * 
-     * @return int[] A dictonary of the feedback, if any; 
+     * @return int[] A dictionary of the feedback, if any; 
      */
     public function getSectionFeedback($sectionID) {
         if (key_exists($sectionID, $this->sectionFeedback)) {
@@ -197,7 +197,7 @@ class Score {
      * 
      * @param string $sectionID The id of the section. 
      * 
-     * @return int[] A dictonary of the feedback, if any; 
+     * @return int[] A dictionary of the feedback, if any; 
      */
     public function getAllFeedback() {
         return $this->sectionFeedback;

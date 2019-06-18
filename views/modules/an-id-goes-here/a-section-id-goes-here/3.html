@@ -1,0 +1,33 @@
+Moudles are easily added
+
+<code style="white-space:pre-wrap;">
+    $myMoudle = new CampTrainingModule("an-id-goes-here");
+    $myModule->setTitle("This is the name of your training module");
+
+    $section = new CampTrainingSection("a-section-id-goes-here");
+    $section->setTitle("This is the name of your section");
+    // once you tell how many pages you want
+    // just add them to the directory at 
+    // /views/moudles/an-id-goes-here/a-section-id-goes-here/
+    // name them 0.html, 1.html, 2.html, and 3.html
+    $section->setNumPages(4);
+    $myModule->addSection($section);
+
+    $quiz = new CampTrainingQuiz();
+    // here we use the verb set instead of add since there can only be at most
+    // one quiz
+    $section->setQuiz($quiz);
+
+    $question = new CampTrainingQuestion(
+        "which of the following has Matt never done?",
+        array(  // since camp's webserver has PHP 5.3.9 (2015 ish), we need to use the old way of making an array
+            "Been outside North America?",
+            "Owned an apple product",
+            "Given a public speech"
+        ),
+        0 // this indicates which item of the array is the answer. (zero-indexed);
+    );
+    $quiz->addQuestion($question);
+
+    return $myModule;
+</code>

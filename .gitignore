@@ -1,0 +1,7 @@
+/data/*
+/public/images/risk-management/*
+/public/styles/risk-management*
+/views/modules/risk-management/*
+my.db 
+!/data/TestModule.php
+
